@@ -1,4 +1,14 @@
 'use strict'
+const handleGreeting = client.createStep({
+  satisfied() {
+    return false
+  },
+
+  prompt() {
+    client.addResponse('Hola')
+    client.done()
+  }
+})
 
 exports.handle = (client) => {
   // Create steps
@@ -36,11 +46,16 @@ exports.handle = (client) => {
   client.runFlow({
     classifications: {
       // map inbound message classifications to names of streams
+          greeting: 'greeting',
+          greeting: 'Hola',
+          greeting: 'Hola buenos dias',
+
     },
     autoResponses: {
       // configure responses to be automatically sent as predicted by the machine learning model
     },
     streams: {
+      greeting: handleGreeting,
       main: 'onboarding',
       onboarding: [sayHello],
       end: [untrained],
