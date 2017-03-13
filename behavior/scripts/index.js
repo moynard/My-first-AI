@@ -10,6 +10,17 @@ const handleGreeting = client.createStep({
   }
 })
 
+const handleCotiz = client.createStep({
+  satisfied() {
+    return false
+  },
+
+  prompt() {
+    client.addResponse('cotizacion')
+    client.done()
+  }
+})
+
 exports.handle = (client) => {
   // Create steps
   const sayHello = client.createStep({
@@ -49,6 +60,8 @@ exports.handle = (client) => {
           greeting: 'greeting',
           greeting: 'Hola',
           greeting: 'Hola buenos dias',
+          cotizacion: 'cotizacion',
+
 
     },
     autoResponses: {
@@ -56,6 +69,7 @@ exports.handle = (client) => {
     },
     streams: {
       greeting: handleGreeting,
+      cotizacion:handleCotiz,
       main: 'onboarding',
       onboarding: [sayHello],
       end: [untrained],
